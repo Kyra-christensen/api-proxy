@@ -29,7 +29,7 @@ export default function PokemonSearch() {
         {/* add inputs/labels for city name, state, and country, using all the things we need with react forms. Don't forget to use the value property to sync these up with the default values in react state */}
         <label>
           Name: 
-          <input type='text' value={nameForm} onChange={e => setNameForm(e.target.value)} />
+          <input type='text' placeholder="Ex) Pikachu" value={nameForm} onChange={e => setNameForm(e.target.value)} />
         </label>
         <button>Get pokemon</button>
       </form>
