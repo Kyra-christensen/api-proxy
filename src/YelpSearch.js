@@ -2,6 +2,9 @@ import { useState } from 'react';
 
 export default function YelpSearch() {
     // you'll need to track your yelp search results, the loading state, and a form field for location with a default value.
+  const [searchResult, setSearchResult] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formLocation, setFormLocation] = useState('');
 
   async function handleYelpSubmit(e) {
     e.preventDefault();
