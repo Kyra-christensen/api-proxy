@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import json from 'superagent/lib/node/parsers/json';
+import Spinner from './Spinner';
+import PokemonList from './PokemonList';
 
 export default function PokemonSearch() {
       // you'll need to track your pokemon search results, the loading state, and one form field: name. For this form field, set a real initial values (like 'pikachu') so the form populates with a default value.
   const [nameForm, setNameForm] = useState('Pikachu');
   const [isloading, setIsLoading] = useState(false);
-  const [pokemon, setPokemon] = useState('');
+  const [pokemon, setPokemon] = useState([]);
   
   async function handlePokemonSubmit(e) {
     e.preventDefault();
@@ -16,19 +17,28 @@ export default function PokemonSearch() {
     const response = await fetch(`/.netlify/functions/pokemon?pokemon=${nameForm}`);
         // put the jsonified data in state and set the loading state to false
     const json = await response.json();
-    setPokemon(json);
+    setPokemon(json.results);
     setIsLoading(false);
   }
       
   return (
     <section className='pokemon'>
       {/* make the fetch on submit */}
-      <form>
-            Search pokemon for a city
+      <form onSubmit={handlePokemonSubmit}>
+            Search for a Pokemon
         {/* add inputs/labels for city name, state, and country, using all the things we need with react forms. Don't forget to use the value property to sync these up with the default values in react state */}
+        <label>
+          Name: 
+          <input type='text' value={nameForm} onChange={e => setNameForm(e.target.value)} />
+        </label>
         <button>Get pokemon</button>
       </form>
       {/* Make a PokemonList component to import and use here. Use a ternery to display a loading spinner (make a <Spinner /> component for this) if the data is still loading. */}
+      {
+        isloading
+          ? <Spinner />
+          : <PokemonList pokemon={pokemon} />
+      }
     </section>
   );
 
