@@ -1,10 +1,13 @@
 import React from 'react';
-import Pokemon from './Pokemon';
 
-export default function PokemonList({ pokemon }) {
+
+export default function PokemonList({ pokemonArr }) {
   return (
     <div>
-      {pokemon.map((pokemon, i) => <Pokemon key={`${pokemon._id}-${i}`} pokemon={pokemon} />)}
+      {pokemonArr.map((pokemon, i) => <div key={pokemon + i}>
+        <h3>{pokemon.pokemon}</h3>
+        <img src={pokemon.url_image} style={{ width: '200px' }} />
+      </div>)}
     </div>
   );
 }

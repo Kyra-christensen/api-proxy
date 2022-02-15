@@ -4,9 +4,9 @@ import PokemonList from './PokemonList';
 
 export default function PokemonSearch() {
       // you'll need to track your pokemon search results, the loading state, and one form field: name. For this form field, set a real initial values (like 'pikachu') so the form populates with a default value.
-  const [nameForm, setNameForm] = useState('Pikachu');
+  const [nameForm, setNameForm] = useState('');
   const [isloading, setIsLoading] = useState(false);
-  const [pokemon, setPokemon] = useState([]);
+  const [pokemonArr, setPokemonArr] = useState([]);
   
   async function handlePokemonSubmit(e) {
     e.preventDefault();
@@ -14,10 +14,10 @@ export default function PokemonSearch() {
         // set the loading state to true
     setIsLoading(true);
         // use fetch to make a request to your netlify pokemon function. Be sure to pass the pokemon name as a query param in the URL
-    const response = await fetch(`/.netlify/functions/pokemon?pokemon=${nameForm}`);
+    const response = await fetch(`/.netlify/functions/pokemon?search=${nameForm}`);
         // put the jsonified data in state and set the loading state to false
     const json = await response.json();
-    setPokemon(json.results);
+    setPokemonArr(json.results);
     setIsLoading(false);
   }
       
@@ -37,7 +37,7 @@ export default function PokemonSearch() {
       {
         isloading
           ? <Spinner />
-          : <PokemonList pokemon={pokemon} />
+          : <PokemonList pokemonArr={pokemonArr} />
       }
     </section>
   );
